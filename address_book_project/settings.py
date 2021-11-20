@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8!agu2$griyh*+n(642knv$=794djnzl8=5@(fn1wlu8l_ovjt'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # 3rd party apps
     'django_countries',
     'crispy_forms',
+    'bootstrapform',
+    'django_filters',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
@@ -80,7 +82,7 @@ WSGI_APPLICATION = 'address_book_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'address_book_db',
+        'NAME': 'address_book',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
