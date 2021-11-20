@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head %}
+    <title>Address Book Form</title>
+{% endblock %}
+{% block content %}
+    <h1>Add record to address book</h1>
+    <form method="post">
+        {% csrf_token %}
+{#        <table>#}
+{#            {{ form.as_table }}#}
+{#        </table>#}
+        {% if form.errors %}
+            {% for key, value in form.errors.items %}
+                <div class="alert alert-error col-lg-12">
+                    {{ value | striptags }}
+                </div>
+            {% endfor %}
+        {% endif %}
+        <div class="form-row">
+            <div class="form-group col-sm-3">
+                {{ form.first_name|as_crispy_field }}
+            </div>
+            <div class="form-group col-sm-3">
+                {{ form.last_name|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-2">
+                {{ form.country|as_crispy_field }}
+            </div>
+            <div class="col-sm-2">
+                {{ form.city|as_crispy_field }}
+            </div>
+            <div class="col-sm-2">
+                {{ form.street|as_crispy_field }}
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Create record</button>
+    </form>
+
+
+
+{% endblock %}
