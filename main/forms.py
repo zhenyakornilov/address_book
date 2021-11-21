@@ -17,10 +17,11 @@ def validate_phone_number(form_phone_number):
 class AddressBookForm(forms.ModelForm):
     url = forms.CharField(label='URL', required=False, validators=[URLValidator])
     phone_number = forms.CharField(label='Phone number', required=False, validators=[validate_phone_number])
+    image = forms.ImageField(label='Image', required=False)
 
     class Meta:
         model = AddressBook
-        fields = ('first_name', 'last_name', 'country', 'city', 'street', 'phone_number', 'url')
+        fields = ('first_name', 'last_name', 'country', 'city', 'street', 'phone_number', 'url', 'image')
         widgets = {'country': CountrySelectWidget(),
                    'city': forms.TextInput(attrs={'placeholder': 'Optional'}),
                    'street': forms.TextInput(attrs={'placeholder': 'Optional'})}

@@ -1,14 +1,12 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
-{% load static %}
 {% block head %}
     <title>Edit contact</title>
 {% endblock %}
 {% block content %}
     <h1>Edit contact</h1>
-    <form action="{% url 'edit-contact' object.pk %}" method="post">
+    <form action="{% url 'edit-contact' object.pk %}" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-
         {% if form.errors %}
             {% for key, value in form.errors.items %}
                 <div class="alert alert-error col-lg-12">
@@ -41,6 +39,11 @@
             </div>
             <div class="col-sm-2">
                 {{ form.street|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-3">
+                {{ form.image|as_crispy_field }}
             </div>
         </div>
         <br>
