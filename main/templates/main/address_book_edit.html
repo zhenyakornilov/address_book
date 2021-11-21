@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block head %}
+    <!--suppress CheckImageSize -->
     <title>Edit contact</title>
 {% endblock %}
 {% block content %}
@@ -42,11 +43,17 @@
             </div>
         </div>
         <div class="form-row">
+            {% if object.image %}
+                <img src="{{ object.image.url }}" alt="" width="150" height="150">
+            {% else %}
+                <img src="/media/default.jpg" alt="" width="150" height="150">
+            {% endif %}
             <div class="col-sm-3">
                 {{ form.image|as_crispy_field }}
             </div>
         </div>
         <br>
         <button type="submit" class="btn btn-primary">Update contact</button>
+        <a href="{{ request.META.HTTP_REFERER }}"><button class="btn btn-secondary">Go Back</button></a>
     </form>
 {% endblock %}
