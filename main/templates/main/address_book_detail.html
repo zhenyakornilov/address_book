@@ -6,9 +6,15 @@
 <div class="container mt-5">
     <div class="col-md-7">
         <div class="card p-3 py-4">
-            <div class="text-center">
-                 <img src="{{ address_book.image }}" width="200" height="200" alt="">
-            </div>
+            {% if address_book.image %}
+                <div class="text-center">
+                    <img src="{{ address_book.image.url }}" width="200" height="200" alt="">
+                </div>
+            {% else %}
+                <div class="text-center">
+                    <img src="/media/default.jpg" width="200" height="200" alt="">
+                </div>
+            {% endif %}
             <div class="text-lg-left">
                 <ul>
                     <li><h4>Fullname: {{ address_book.first_name }} {{ address_book.last_name }}</h4></li>

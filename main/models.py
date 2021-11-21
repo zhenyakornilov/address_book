@@ -5,7 +5,7 @@ from django_countries.fields import CountryField
 
 
 class AddressBook(models.Model):
-    image = models.ImageField(default='default.jpg', upload_to='contact_pics', blank=True, null=True)
+    image = models.ImageField(upload_to='contact_pics', blank=True)
     first_name = models.CharField(max_length=100, unique=False, db_column='First name')
     last_name = models.CharField(max_length=100, unique=False, db_column='Last name')
     country = CountryField(blank=True)

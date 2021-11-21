@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+
 {% load crispy_forms_tags %}
 {% block head %}
     <title>All records</title>
@@ -11,6 +12,34 @@
         {{ filter.form|crispy }}
             <button type="submit" class="btn btn-secondary">Search</button>
     <br><br/>
+
+    <div class="text-center">
+        <nav class="paginator">
+        {% for p in paginator.page_range %}
+        {% if page_obj.number == p %}
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1" style="color: black"><b>&laquo; First</b></a>
+                <a href="?page={{ page_obj.previous_page_number }}"
+                   style="color: black"><b>| {{ page_obj.previous_page_number }} |</b></a>
+            {% endif %}
+
+            <span class="current">
+                <b>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</b>
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}"
+                   style="color: black"><b>| {{ page_obj.next_page_number }} |</b></a>
+                <a href="?page={{ page_obj.paginator.num_pages }}"
+                   style="color: black"><b>Last &raquo;</b></a>
+            {% endif %}
+        </span>
+        {% endif %}
+        {% endfor %}
+    </nav>
+    </div>
+
     </form>
     <table class="table table-striped table-bordered table-hover">
         <thead class="thead-dark">
@@ -40,28 +69,5 @@
             {% endfor %}
         </tbody>
     </table>
-    <br><br/>
-
-    {% if is_paginated %}
-        <ul class="pagination">
-            {% if page_obj.has_previous %}
-                <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-                <li class="disabled"><span>&laquo;</span></li>
-            {% endif %}
-            {% for i in paginator.page_range %}
-                {% if page_obj.number == i %}
-                    <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-                {% else %}
-                    <li><a href="?page={{ i }}">{{ i }}</a></li>
-                {% endif %}
-            {% endfor %}
-            {% if page_obj.has_next %}
-                <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
-            {% else %}
-                <li class="disabled"><span>&raquo;</span></li>
-            {% endif %}
-        </ul>
-    {% endif %}
 {% endblock %}
 
