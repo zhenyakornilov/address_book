@@ -1,6 +1,32 @@
 {% extends 'base.html' %}
+{% block head %}
+    <title>{{ address_book.first_name }} {{ address_book.last_name }}</title>
+{% endblock %}
 {% block content %}
-<h1>{{ object.first_name }} {{ object.last_name }}</h1>
-<p>{{ object.country }}</p>
+<div class="container mt-5">
+    <div class="col-md-7">
+        <div class="card p-3 py-4">
+{#            <div class="text-center">#}
+{#                 <img src="">#}
+{#            </div>#}
+            <div class="text-center">
+                <ul>
+                    <li><h4>Fullname: {{ address_book.first_name }} {{ address_book.last_name }}</h4></li>
+                    <li><h4>Country: {{ address_book.country.name }}</h4></li>
+                    <li><h4>City: {{ address_book.city }}</h4></li>
+                    <li><h4>Address: {{ address_book.street }}</h4></li>
+                    <li><h4>Phone number: {{ address_book.phone_number }}</h4></li>
+                    <li><h4>URL: {{ address_book.url }}</h4></li>
+
+                </ul>
+                <div>
+                    <a href {% url 'edit-contact' address_book.pk %}><button class="btn btn-primary px-4">Edit</button></a>
+                    <a href {% url 'delete-contact' address_book.pk %}><button class="btn btn-danger px-4 ms-3">Delete</button></a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 

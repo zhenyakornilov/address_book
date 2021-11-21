@@ -20,6 +20,8 @@
             <th scope="col">City</th>
             <th scope="col">Address</th>
             <th scope="col">Link</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
         </thead>
         <tbody>
             {% for record in filter.qs %}
@@ -30,7 +32,9 @@
                     <td>{{ record.country }}</td>
                     <td>{{ record.city }}</td>
                     <td>{{ record.street }}</td>
-                    <td><a href="{% url 'list-records' %}">Show details</a></td>
+                    <td><a href="{% url 'watch-contact' record.pk %}">Show details</a></td>
+                    <td><a href="{% url 'edit-contact' record.pk%}">Edit</a></td>
+                    <td><a href="{% url 'delete-contact' record.pk%}">Delete</a></td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -1,7 +1,8 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
 from django.shortcuts import get_object_or_404, redirect
-from django.views.generic import CreateView, DetailView, ListView
+from django.urls import reverse_lazy
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .filters import AddressBookFilter
 from .forms import AddressBookForm
@@ -37,5 +38,20 @@ class AddressBookRecordDetailView(DetailView):
     queryset = AddressBook.objects.all()
 
     def get_object(self, **kwargs):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(AddressBook, id=id_)
+        pk_ = self.kwargs.get("pk")
+        return get_object_or_404(AddressBook, pk=pk_)
+
+
+class EditContactView(UpdateView):
+    model = AddressBook
+    template_name = 'main/address_book_edit.html'
+    form_class = AddressBookForm
+    success_url = reverse_lazy('list-records')
+
+
+class DeleteContactView(DeleteView):
+    model = AddressBook
+    success_url = reverse_lazy('list-records')
+
+    def get(self, *args, **kwargs):
+        return self.post(*args, **kwargs)
