@@ -65,4 +65,3 @@ class DeleteContactView(DeleteView):
     def get_object(self, **kwargs):
         pk_ = self.kwargs.get("pk")
         return get_object_or_404(AddressBook, pk=pk_)
-
