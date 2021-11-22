@@ -8,5 +8,3 @@ from .factories import AddressBookFactory
 def create_contact_in_address_book():
     contact = AddressBookFactory.create()
     return contact
-
-

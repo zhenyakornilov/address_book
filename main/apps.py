@@ -6,4 +6,4 @@ class MainConfig(AppConfig):
     name = 'main'
 
     def ready(self):
-        from .handlers import capitalize_add_contact_data
+        from .handlers import capitalize_add_contact_data  # noqa: F401
