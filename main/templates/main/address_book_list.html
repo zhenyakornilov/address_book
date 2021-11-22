@@ -9,7 +9,33 @@
     <br><br/>
     <a href="{% url 'address-book' %}"><button class="btn btn-primary">Add more records</button></a>
     <form method="GET">
-        {{ filter.form|crispy }}
+        <div class="form-row">
+            <div class="form-group col-sm-3">
+                {{ filter.form.first_name__icontains|as_crispy_field }}
+            </div>
+            <div class="form-group col-sm-3">
+                {{ filter.form.last_name__icontains|as_crispy_field}}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-3">
+                {{ filter.form.phone_number__icontains|as_crispy_field }}
+            </div>
+            <div class="col-sm-3">
+                {{ filter.form.url__icontains|as_crispy_field }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-sm-2">
+                {{ filter.form.country|as_crispy_field }}
+            </div>
+            <div class="col-sm-2">
+                {{ filter.form.city__icontains|as_crispy_field }}
+            </div>
+            <div class="col-sm-2">
+                {{ filter.form.street__icontains|as_crispy_field }}
+            </div>
+        </div>
             <button type="submit" class="btn btn-secondary">Search</button>
     <br><br/>
 
@@ -54,7 +80,7 @@
             <th scope="col"></th>
         </thead>
         <tbody>
-            {% for record in addressbook_list %}
+            {% for record in filter.qs %}
                 <tr>
                     <td>{{ record.id|safe }}</td>
                     <td>{{ record.first_name }}</td>

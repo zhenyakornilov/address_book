@@ -1,7 +1,7 @@
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from .filters import AddressBookFilter
@@ -15,9 +15,8 @@ class AddressBookCreateView(SuccessMessageMixin, CreateView):
     success_message = 'Record saved successfully!'
 
     @transaction.atomic
-    def form_valid(self, form):
-        AddressBook.objects.create(**form.cleaned_data)
-        return redirect('list-records')
+    def get_success_url(self):
+        return reverse('watch-contact', kwargs={'pk': self.object.pk})
 
 
 class AddressBookListRecords(ListView):
@@ -47,33 +46,23 @@ class AddressBookRecordDetailView(DetailView):
         pk_ = self.kwargs.get("pk")
         return get_object_or_404(AddressBook, pk=pk_)
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['update_form'] = AddressBookForm()
-        return context
-
 
 class EditContactView(UpdateView):
     model = AddressBook
     template_name = 'main/address_book_edit.html'
     form_class = AddressBookForm
-    success_url = '/'
 
-    def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
-
-    # def get_success_url(self):
-    #     return reverse('watch-contact', kwargs={'pk': self.object.pk})
+    def get_success_url(self):
+        return reverse('watch-contact', kwargs={'pk': self.object.pk})
 
 
 class DeleteContactView(DeleteView):
     model = AddressBook
     success_url = reverse_lazy('list-records')
+    template_name = 'main/address_book_confirm_delete.html'
+    context_object_name = 'address_book'
 
-    def get(self, *args, **kwargs):
-        return self.post(*args, **kwargs)
+    def get_object(self, **kwargs):
+        pk_ = self.kwargs.get("pk")
+        return get_object_or_404(AddressBook, pk=pk_)
+
