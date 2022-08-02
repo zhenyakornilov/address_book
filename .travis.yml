@@ -1,0 +1,23 @@
+language: python
+python:
+  - "3.9"
+install:
+  - pip install -r requirements.txt
+env:
+  -SECRET_KEY=TRAVIS_TEST
+script:
+  - flake8 .
+  - python manage.py collectstatic
+  - python manage.py validate_templates
+  - python manage.py check
+  - python manage.py makemigrations --check --dry-run
+  - pip check
+  - pytest -s
+
+services:
+  - postgresql
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+
+

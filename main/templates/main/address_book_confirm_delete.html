@@ -1,8 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block head %}
-    <!--suppress ALL -->
-    <title>{{ address_book.first_name }} {{ address_book.last_name }}</title>
+    <title>Delete {{ address_book.first_name }} {{ address_book.last_name }}?</title>
 {% endblock %}
 {% block content %}
 <div class="container mt-5">
@@ -34,15 +33,21 @@
 
                 </ul>
                 <div class="text-center">
-                    <a href="{% url 'list-records' %}"><button class="btn badge-dark px-4">Go to all contacts</button></a>
-                    <a href="{% url 'edit-contact' address_book.pk %}"><button class="btn badge-primary px-4">Edit</button></a>
-                    <a href="{% url 'delete-contact' address_book.pk %}"><button class="btn badge-danger px-4">Delete</button></a>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <legend class="border-bottom mb-4">Delete contact</legend>
+                        <h2>Are you sure you want to delete
+                            {{ address_book.first_name }} {{ address_book.last_name }}
+                            from Address Book?</h2>
+                        <div class="form-group">
+                            <button class="btn badge-danger" type="submit">Yes, Delete</button>
+                            <a class="btn badge-info" href="{% url 'watch-contact' address_book.id %}">Cancel</a>
+                        </div>
+                    </form>
                 </div>
-
             </div>
         </div>
     </div>
 </div>
 
 {% endblock %}
-
